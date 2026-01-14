@@ -1,15 +1,9 @@
-import type { HardhatUserConfig } from "hardhat/config";
-
 import hardhatToolboxViemPlugin from "@nomicfoundation/hardhat-toolbox-viem";
-import { configVariable } from "hardhat/config";
+import { configVariable, defineConfig } from "hardhat/config";
 
-const config: HardhatUserConfig = {
+export default defineConfig({
   plugins: [hardhatToolboxViemPlugin],
   solidity: {
-    npmFilesToBuild: [
-      "@openzeppelin/contracts/proxy/transparent/ProxyAdmin.sol",
-      "@openzeppelin/contracts/proxy/transparent/TransparentUpgradeableProxy.sol",
-    ],
     profiles: {
       default: {
         version: "0.8.28",
@@ -24,6 +18,9 @@ const config: HardhatUserConfig = {
         },
       },
     },
+    npmFilesToBuild: [
+      "@openzeppelin/contracts/token/ERC20/ERC20.sol",
+    ]
   },
   networks: {
     hardhatMainnet: {
@@ -41,6 +38,4 @@ const config: HardhatUserConfig = {
       accounts: [configVariable("SEPOLIA_PRIVATE_KEY")],
     },
   },
-};
-
-export default config;
+});
